@@ -7,7 +7,7 @@ ActivityHelper::Application.configure do
   config.cache_classes = false
 
   # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
+  # config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -23,7 +23,7 @@ ActivityHelper::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
+  # config.active_record.mass_assignment_sanitizer = :strict
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
@@ -32,6 +32,22 @@ ActivityHelper::Application.configure do
   # Do not compress assets
   config.assets.compress = false
 
+  # Send deprecation notices to registered listeners
+  config.active_support.deprecation = :notify
+
+  #Email settings
+  config.action_mailer.default_url_options = {:host => "localhost"}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port    => 587,
+    :domain  => 'gmail.com',
+    :authentication => :login,
+    :user_name => "bigcolors@akaruilabs.com",
+    :password => "123admin",
+  }
+
   # Expands the lines which load the assets
   config.assets.debug = true
+  config.eager_load= :true
 end
