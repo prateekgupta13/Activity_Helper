@@ -1,9 +1,38 @@
-<div class="center hero-unit">
-  <h1>Welcome to the Home Page</h1>
-
-  <h2>
-    This is the home page for the Activity_Helper application.
-  </h2>
-
-  <%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary" %>
-</div>
+<% if signed_in?%>
+  <div class="row">
+    <aside class="span12">
+      <section>
+        <a href="<%= user_path(current_user) %>">
+          <%= gravatar_for current_user %>
+        </a>
+        <h1>
+          <%= current_user.name %>
+        </h1>
+        <span>
+          <%= link_to "view my profile", current_user %>
+        </span>
+        <span>
+          <%= pluralize(current_user.activities.count, "activity") %>
+        </span>
+      </section>
+      <section>
+        <div class="abc">
+        <%= render partial:'activities/new', locals: { nure: @activity } %>
+        </div>
+      </section>
+      <%= will_paginate @activities%>
+        <div class="span12">
+          <div class="activities">
+            <%= render partial:'activities/activity', locals: { nures: @activities } %>
+          </div>
+        </div>
+      <%= will_paginate @activities%>      
+    </aside>
+  </div>
+<% else %>
+  <div class="center hero-unit">
+    <h1>Welcome to the Home Page</h1>
+    <h2>This is the home page for the Activity_Helper application.</h2>
+    <%= link_to "Sign up now!", new_user_registration_path, class: "btn bn-large btn-primary" %>
+  </div>
+<% end %>   

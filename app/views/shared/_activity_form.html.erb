@@ -1,0 +1,12 @@
+<%=form_for :activity, url:{action: :create, :controller=> "activities"} do |f|%>
+	<%=f.label :category%>
+	<%= f.select :category, [['Select','--Select--'],['Sports','Sports'],['Movies','Movies'],['Food','Food'],['Books','Books'],['Music','Music']], selected: "--Select--" %>
+	<%=f.label :ActivityName%>
+	<%=f.text_field :name%>
+	<%=f.label :description%>
+	<div class="field">
+		<%=f.text_area :description,rows: 5, cols: 10, placeholder: "Less Than 200 characters" %><br>
+	</div>
+	<%=f.submit "Create", class: "btn btn-large btn-primary"%>
+<%end%>
+

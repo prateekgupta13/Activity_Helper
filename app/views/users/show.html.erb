@@ -1,11 +1,27 @@
 <% provide(:title, @user.name) %>
 <div class="row">
-  <aside class="span4">
-    <section>
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
-    </section>
-  </aside>
+    <aside class="span12">
+      <section>
+        <a href="<%= user_path(@user) %>">
+          <%= gravatar_for @user %>
+        </a>
+        <h1>
+          <%= @user.name %>
+        </h1>
+        <span>
+          <%= pluralize(@user.activities.count, "activity") %>
+        </span>
+      </section>
+    </aside>
+</div><hr>
+<div>
+	<%= will_paginate @activities%>
+          <div class="span12">
+           <%= render partial:'activities/activity', locals: { nures: @activities }%>
+          </div>
+  <%= will_paginate @activities%>      
 </div>
+
+
+
+  

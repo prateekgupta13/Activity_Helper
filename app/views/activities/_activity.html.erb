@@ -1,0 +1,28 @@
+
+<div class="activities_partial">
+    <% nures.each do |rahul| %>
+    <div class="span12">
+      <div class="row">
+    		<div span="3">
+          <%=link_to (gravatar_for rahul.user), rahul.user %>
+          <%=rahul.user.username%>  
+    		</div>
+        <div class="sapn3 offset3">
+          <div class="row1">
+          Name: <%= rahul.name %>
+          </div>
+          <div class="row2">
+          Category: <%= rahul.category %>
+          </div>
+        </div>
+        <div class="span3 offset6">
+          Description:<%= rahul.description %><br>
+        </div>
+      </div><br>
+      <div class="row">
+        <%=link_to "Comment",""%>
+      </div>
+      <hr>
+    </div>
+  <%end%>
+</div>

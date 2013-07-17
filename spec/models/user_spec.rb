@@ -3,25 +3,29 @@ require 'spec_helper'
 describe User do
 
 	before do
-		@user = User.new(name: "Prateek", email: "user@example.com", 
+		@user = User.new(username:"Prateek", name: "Prateek", email: "user@example.com", 
 		               password: "foobared", password_confirmation: "foobared")
 	end
 
 	subject { @user }
 
+    it { should respond_to(:username) }
 	it { should respond_to(:name) }
 	it { should respond_to(:email) }
 	it { should respond_to(:password)}
 	it { should respond_to(:password_confirmation)}
+	it { should respond_to(:activities) }
+	
+	
 	it { should be_valid }
 
-	describe "when name is not present" do
-    	before { @user.name = " " }
-    	it { should_not be_valid }
-  	end
+	 describe "when username is not present" do
+     	before { @user.username = " " }
+     	it { should_not be_valid }
+   	end
 
-    describe "when name is too long" do
-  		before {@user.name="a"*21}
+    describe "when username is too long" do
+  		before {@user.username="a"*50}
   		it {should_not be_valid}
 	end
 
@@ -79,6 +83,29 @@ describe User do
 		before {@user.password=@user.password_confirmation="a"*7}
 		it {should be_invalid}
 	end
+
+	describe "activity associations" do
+		before { @user.save }
+	    let!(:older_activity) do 
+	      FactoryGirl.create(:activity, user: @user, created_at: 1.day.ago)
+	    end
+	    let!(:newer_activity) do
+	      FactoryGirl.create(:activity, user: @user, created_at: 1.hour.ago)
+	    end
+
+	    it "should have the right activities in the right order" do
+	      @user.activities.should == [newer_activity, older_activity]
+	    end
+
+	    it "should destroy associated activities" do
+	      activities = @user.activities.dup
+	      @user.destroy
+	      
+	      activities.each do |activity|
+	        Activity.find_by_id(activity.id).should be_nil
+	      end
+    	end
+  	end
 end
  
 

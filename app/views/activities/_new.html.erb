@@ -1,0 +1,24 @@
+<div class="act">
+  <div class="left hero-unit">
+    <%=form_for([current_user,nure], remote:true, html:{id: "create_activity_form"})  do |f|%>
+     <%=render partial:'shared/error_messages', locals: { activity: nure } %> 
+      <div class="row">
+        <div class="span3">
+          <%=f.label :category%>
+          <%= f.select :category, [['Select',''],['Sports','Sports'],['Movies','Movies'],['Food','Food'],['Books','Books'],['Music','Music']]%>
+        </div>
+        <div class="span3">
+          <%=f.label :name%>
+          <%=f.text_field :name%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span8">
+          <%=f.label :description%>
+          <%=f.text_area :description, placeholder: "Less Than 200 characters" %><br>
+        </div>
+      </div>
+      <%=f.submit "Create", class: "btn btn-primary"%>
+    <%end%>
+  </div>
+</div>

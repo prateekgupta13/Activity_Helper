@@ -2,10 +2,16 @@ ActivityHelper::Application.routes.draw do
 
    
   devise_for :users, controllers: {registrations: "users/registrations"}
-  resources :users
-  match 'users/:id' => 'users#show', via: [:get]
-  match '/activity', to: 'static_pages#activity', via: [:get]
-  # The priority is based upon order of creation:
+  resources :users do
+  resources :activities
+  end
+  # resources :sessions
+  # match '/sign_up',  to: 'regsitration#new',     via: 'get'
+  # match '/sign_in',  to: 'sessions#new',         via: 'get'
+  # match '/sign_out', to: 'sessions# only: [:new, :create, :destroy]destroy',     via: 'delete'
+  # match 'users/:id' => 'users#show', via: [:get]
+  # match '/activity', to: 'static_pages#activity', via: [:get]
+  # # The priority is based upon order of creation:
   # first created -> highest priority.
 
   # Sample of regular route:
