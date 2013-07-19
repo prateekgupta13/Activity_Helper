@@ -1,5 +1,6 @@
 class Activity < ActiveRecord::Base
 	 belongs_to :user
+	 has_many :comments, dependent: :destroy
 	 default_scope order: 'activities.created_at DESC'
 
 	 attr_accessible :user_id, :category, :name, :description

@@ -15,7 +15,6 @@ describe "Static pages" do
       describe "for signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
       before do
-
         FactoryGirl.create(:activity, user: user, category: "Sports", name: "Cricket", description: "I like") 
         FactoryGirl.create(:activity, user: user, category: "Music", name: "Bollywood", description: "I like")
         sign_in user

@@ -4,11 +4,11 @@ class ActivitiesController < ApplicationController
  # before_filter :correct_user,   only: [:new,:create, :destroy]	
 
   def new
-    # @activity=Activity.new
   end
 
   def create
 		@activity = current_user.activities.build(params[:activity])
+    @comment=Comment.new
  		if @activity.save
       @activities= Activity.paginate(page: params[:page])
       respond_with do |format|
@@ -18,11 +18,8 @@ class ActivitiesController < ApplicationController
           end
         end
       end
-      # flash[:success] = "Activity created!"
-      # redirect_to root_path
   	else
       @user = current_user
-      # @activities= Activity.paginate(page: params[:page])
       respond_with do |format|
         format.html do
           if request.xhr?
@@ -30,7 +27,6 @@ class ActivitiesController < ApplicationController
           end
         end
       end 
-    	# render 'static_pages/home'
   	end
 	end
 

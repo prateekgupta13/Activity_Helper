@@ -3,7 +3,9 @@ ActivityHelper::Application.routes.draw do
    
   devise_for :users, controllers: {registrations: "users/registrations"}
   resources :users do
-  resources :activities
+    resources :activities do
+      resources :comments
+    end
   end
   # resources :sessions
   # match '/sign_up',  to: 'regsitration#new',     via: 'get'

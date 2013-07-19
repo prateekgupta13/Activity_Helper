@@ -13,4 +13,12 @@ FactoryGirl.define do
     description "desc"
     user
   end
+
+  factory :comment do
+    content "wonderful"
+    user
+    activity
+  end
+
+
 end

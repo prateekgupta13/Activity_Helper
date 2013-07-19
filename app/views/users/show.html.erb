@@ -1,4 +1,4 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, @user.username) %>
 <div class="row">
     <aside class="span12">
       <section>
@@ -6,7 +6,7 @@
           <%= gravatar_for @user %>
         </a>
         <h1>
-          <%= @user.name %>
+          <%= @user.username %>
         </h1>
         <span>
           <%= pluralize(@user.activities.count, "activity") %>

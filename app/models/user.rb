@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   has_many :activities, dependent: :destroy
 
+  has_many :comments, dependent: :destroy
+
   attr_accessible :name,:email, :password, :password_confirmation, :username
   validates :name,length: {maximum: 15}
   validates :username, presence: true, length: {maximum: 20}

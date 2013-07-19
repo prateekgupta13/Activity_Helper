@@ -1,0 +1,8 @@
+	<% if activity.comments.any?%>	
+		<% activity.comments.each do|comment|%>
+			<div class="comments-partial">
+				<%=comment.content%>
+			</div>
+		<%end%>
+	<%end%>
+

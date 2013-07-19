@@ -38,8 +38,8 @@ describe "User pages" do
 
     before { visit user_path(user) }
 
-    it { should have_selector('h1',    text: user.name) }
-    it { should have_title(user.name) }
+    it { should have_selector('h1',    text: user.username) }
+    it { should have_title(user.username) }
 
     describe "activities" do
       it { should have_content(a1.category) }
