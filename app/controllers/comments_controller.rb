@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
         end
       end
     else
-      # @user = current_user
+      @user = current_user
       # @activity=current_user.activities.find(params[:activity_id])
       # @comment=@activity.comments.build(params[:comment])
       # @comment.user = current_user

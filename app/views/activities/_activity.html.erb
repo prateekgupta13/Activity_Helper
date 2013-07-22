@@ -1,36 +1,50 @@
 <div id="new">
   <% nures.each do |rahul| %>
     <div class="activities_partial">
-      <div class="span12">
-        <div class="row">
-      		<div span="3">
+      <section>
+        <div>
+          <span>
             <%=link_to (gravatar_for rahul.user), rahul.user %>
-            <%=rahul.user.username%>  
-      		</div>
-          <div class="sapn3 offset3">
-            <div class="row1">
-              Name: <%= rahul.name %>
-            </div>
-            <div class="row2">
-              Category: <%= rahul.category %>
-            </div>
-          </div>
-          <div class="span3 offset6">
-            Description:<%= rahul.description %><br>
-          </div>
+          </span>
+          <span>
+            <h6><%=rahul.user.username%></h6>
+          </span>
         </div>
+        <div class="span3 offset3">
+          <span>
+            Name: <%= rahul.name %>
+          </span>
+          <span>
+            Category: <%= rahul.category %>
+          </span>
+        </div>
+        <div>
+          <span>
+            Description:  <%= rahul.description %>
+          </span>
+          <span class="timestamp">
+            Posted <%= time_ago_in_words(rahul.created_at) %> ago.
+          </span>
+        </div>
+      </section>
+      <div>
+        <span>
+          <%=link_to "Comment?", "#", remote:true,class:"click-link"%>&nbsp;
+          <%=link_to "Like",'#', remote:true%>
+        </span>
+      </div>
+      <div class="whole-comment">
         <div class="row">
-          <%=link_to "Comment?", "#", remote:true,class:"click-link"%>
-        </div>
-        <div class="whole-comment">
-          <div class="row">
+          <div class="abc">
             <%=render partial:'comments/new', locals:{activity:rahul, comment:@comment}%>
           </div>
-        <div class="row">
-          <%=render partial: 'comments/comment', locals:{activity:rahul,comments:@comments}%>
+        </div>
+        <div>
+          <span>
+            <%=render partial: 'comments/comment', locals:{activity:rahul,comments:@comments}%>
+          </span>
         </div>
       </div><hr>
-    </div>
     </div>
   <%end%>
 </div>

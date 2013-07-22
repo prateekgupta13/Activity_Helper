@@ -1,0 +1,8 @@
+<%@activities.each do |activity|%>
+	<li>
+	  <span class="content"><%= activity.description %></span>
+	  <span class="timestamp">
+	    Posted <%= time_ago_in_words(activity.created_at) %> ago.
+	  </span>
+	</li>
+<%end%>

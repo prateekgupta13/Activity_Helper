@@ -16,17 +16,21 @@
         </span>
       </section>
       <section>
-        <div class="abc">
-        <%= render partial:'activities/new', locals: { nure: @activity } %>
-        </div>
-      </section>
-      <%= will_paginate @activities%>
-        <div class="span12">
-          <div class="activities">
-            <%= render partial:'activities/activity', locals: { nures: @activities } %>
+        <span>
+          <div class="abc">
+            <%= render partial:'activities/new', locals: { nure: @activity } %>
           </div>
-        </div>
-      <%= will_paginate @activities%>      
+        </span>
+      </section>
+      <section>
+        <span>
+          <%= will_paginate @activities%>
+            <div class="activities">
+                <%= render partial:'activities/activity', locals: { nures: @activities } %>
+            </div>
+          <%= will_paginate @activities%>      
+        </span>
+      </section>
     </aside>
   </div>
 <% else %>
