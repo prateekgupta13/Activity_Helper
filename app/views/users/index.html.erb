@@ -1,0 +1,42 @@
+<% provide(:title, 'All users') %>
+<h1>All users</h1>
+<%= will_paginate %>
+<span>
+	<div class="users">
+		<%@users.each do|user|%>
+			<div class="list-users">
+				<span>
+					<%=user.username%>
+				</span>
+				<span>
+					<%=link_to (gravatar_for user), user_path(user)%>
+				</span>
+				<% if current_user.friendships.find_by_friend_id(user) %>
+					<% if current_user.friendships.find_by_friend_id(user).status==false%> 
+						<span class="status">
+						<%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
+						</span>
+					<%else%>
+						<span class="status">
+							<%=link_to "Friend",'#', class:"btn btn-primary"%>
+						</span>
+					<%end%>
+				<%elsif current_user.inverse_friendships.find_by_user_id(user)%>
+					<% if current_user.inverse_friendships.find_by_user_id(user).status==false%> 
+						<span class="status">
+						<%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
+						</span>
+					<%else%>
+						<span class="status">
+							<%=link_to "Friend",'#', class:"btn btn-primary"%>
+						</span>
+					<%end%>
+				<%else%>
+					<span class="status">
+						<%=link_to "Add Friend",friendships_path(:friend_id => user.id), :method => :post,  class:"btn btn-primary"%>
+					</span>
+				<%end%>
+			</div>
+		<%end%>
+	</div>
+</span>

@@ -5,12 +5,40 @@
         <a href="<%= user_path(@user) %>">
           <%= gravatar_for @user %>
         </a>
+        <% if @user!=current_user%>
+          <% if current_user.friendships.find_by_friend_id(@user.id) %>
+            <% if current_user.friendships.find_by_friend_id(@user.id).status==false%> 
+              <span class="addfriend">
+              <%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
+              </span>
+            <%else%>
+              <span class="addfriend">
+                <%=link_to "Friend",'#', class:"btn btn-primary"%>
+              </span>
+            <%end%>
+          <%elsif current_user.inverse_friendships.find_by_user_id(@user.id)%>
+            <% if current_user.inverse_friendships.find_by_user_id(@user.id).status==false%> 
+              <span class="addfriend">
+              <%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
+              </span>
+            <%else%>
+              <span class="addfriend">
+                <%=link_to "Friend",'#', class:"btn btn-primary add"%>
+              </span>
+            <%end%>
+          <%else%>
+            <span class="addfriend">
+              <%=link_to "Add Friend",friendships_path(:friend_id => @user.id), :method => :post,  class:"btn btn-primary"%>
+            </span>
+          <%end%>
+        <%end%>
+
         <h1>
           <%= @user.username %>
         </h1>
         <span>
           <%= pluralize(@user.activities.count, "activity") %>
-        </span>
+        </span>        
     </section><hr>
   </aside>
   <aside>
@@ -21,6 +49,74 @@
         <%= will_paginate @activities %>
       <% end %>
     </div>
+    <section>
+      <div class="friends-section">
+        <h2>Friends</h2>
+        <span>
+          <% @user.friendships.each do|friendship| %>
+            <% if friendship.status==true %>
+              <div class="friends">
+                <span>
+                  <%=friendship.friend.username%>
+                </span>
+                <span>
+                  <%=link_to (gravatar_for friendship.friend, {size:50}),user_path(friendship.friend.username) %>
+                </span>
+                <span>
+                  <%if current_user==@user%>
+                    (<%= link_to "remove", friendship_path(friendship), :method => :delete %>)
+                  <%end%>
+                </span>
+              </div>
+            <%end%>
+          <%end%>
+        </span>
+
+
+        <span>
+          <% @user.inverse_friendships.each do|inverse_friendship| %>
+            <% if inverse_friendship.status==true %>
+              <div class="friends">
+                <span>
+                  <%=inverse_friendship.user.username%>
+                </span>
+                <span>
+                  <%=link_to (gravatar_for inverse_friendship.user, {size:50}),user_path(inverse_friendship.user.username) %>
+                </span>
+                <span>
+                  <%if current_user==@user%>
+                    (<%= link_to "remove", inverse_friendship_path(inverse_friendship), :method => :delete %>)
+                  <%end%>
+                </span>
+              </div>
+            <%end%>
+          <%end%>
+        </span><hr>
+
+
+        <h2>Friend Requests for you</h2>
+        <span>
+          <%@user.inverse_friendships.each do|inverse_friendship| %>
+            <span>
+              <%if inverse_friendship.status==false%>
+                <div class="friends">
+                  <span>
+                    <%=inverse_friendship.user.username%>
+                  </span>
+                  <span>
+                    <%=link_to (gravatar_for  inverse_friendship.user, {size:50}),user_path(inverse_friendship.user.username) %>
+                     <%if current_user==@user%>
+                      <%=link_to "Accept", friendship_path(inverse_friendship), method: :put%>
+                      <%=link_to "Decline",friendship_path(inverse_friendship), method: :delete%>
+                    <%end%>
+                  </span>
+                </div>
+              <%end%>
+            </span>
+          <%end%>
+        </span><hr>
+      </div>
+    </section>
   </aside>
 </div>
 

@@ -2,11 +2,14 @@ ActivityHelper::Application.routes.draw do
 
    
   devise_for :users, controllers: {registrations: "users/registrations"}
+  
   resources :users do
     resources :activities do
       resources :comments
     end
   end
+  resources :friendships
+  resources :inverse_friendships
   # resources :sessions
   # match '/sign_up',  to: 'regsitration#new',     via: 'get'
   # match '/sign_in',  to: 'sessions#new',         via: 'get'

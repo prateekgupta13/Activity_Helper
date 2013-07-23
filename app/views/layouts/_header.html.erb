@@ -17,6 +17,7 @@
           <%else%>
 
           <li><%= link_to "Profile", user_path(current_user) %></li>
+          <li><%= link_to "Find Friends", users_path %></li>
           <li><%= link_to "Logout", destroy_user_session_path, method: :DELETE %></li>
           <%end%>
         </ul>
