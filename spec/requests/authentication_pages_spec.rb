@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Authentication" do
+describe "Authentication", :js=>true do
 
   subject { page }
 
@@ -18,6 +18,7 @@ describe "Authentication" do
           it { should have_title('Sign in') }
           it { should have_selector('div', text: 'Invalid') }
       end
+      
       describe "with valid information" do
         let(:user) { FactoryGirl.create(:user) }
         before do
@@ -25,9 +26,10 @@ describe "Authentication" do
           fill_in "Password", with: user.password
           click_button "Sign in"
         end
+        it { should have_content("Signed in") }
         it { should have_content(user.username) }
+        it { should have_link("view my profile") }   
         it { should have_link('Profile', href: user_path(user)) }
-        it { should have_link('Comment?'),href:'#'}
         it { should have_link('Logout', href: destroy_user_session_path) }
         it { should_not have_link('Sign in', href: new_user_session_path) }
 
@@ -49,12 +51,24 @@ describe "Authentication" do
 
           describe "submitting to the create action" do
           before { post user_activities_path(user) }
-          specify { response.should redirect_to(new_user_session_path) }
+          specify { response.should redirect_to(root_path) }
           end
 
           describe "submitting to the destroy action" do
           before { delete user_activity_path(user,FactoryGirl.create(:activity)) }
-          specify { response.should redirect_to(new_user_session_path) }
+          specify { response.should redirect_to(root_path) }
+          end
+        end
+
+        describe "in the Friendships controller" do
+          describe "submitting to the create action" do
+            before { post friendships_path }
+            specify { expect(response).to redirect_to(root_path) }
+          end
+
+          describe "submitting to the destroy action" do
+            before { delete friendship_path(1) }
+            specify { expect(response).to redirect_to(root_path) }
           end
         end
     end

@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
  respond_to :html,:xml,:json
- before_filter :signed_in_user, only: [:create, :destroy]
+ before_filter :signed_in_user, only: [:create, :destroy, :index]
 
 	def new
 	end
@@ -39,13 +39,4 @@ class CommentsController < ApplicationController
 	def index
 	end
 	
-
-	private
-
-  	def signed_in_user
-    	unless signed_in?
-        # store_location
-        redirect_to new_user_session_path, notice: "Please sign in."
-    	end
-  	end  
-  end
+end

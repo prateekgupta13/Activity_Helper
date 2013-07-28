@@ -7,7 +7,6 @@ describe "Static pages" do
     	it {should have_selector('h1', text: 'Home Page')}
     	it {should have_title("Welcome to Activity_Helper")}
   		it {should_not have_title('| Home')}
-  		it {should have_link('Activities')}
   		it {should have_link('Register')}
   		it {should have_link('Sign in')}
   		it {should have_selector('input')} 	

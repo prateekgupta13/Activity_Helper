@@ -1,4 +1,5 @@
 class FriendshipsController < ApplicationController
+	before_filter :signed_in_user, only: [:create,:update,:destroy]
 	def create
 		@friendship = current_user.friendships.build(:friend_id => params[:friend_id])
   		if @friendship.save
@@ -14,9 +15,9 @@ class FriendshipsController < ApplicationController
 
 	def update
 		@friendship=Friendship.find(params[:id])
-		@friendship.update_attribute(:status,true)
+		@friendship.update_attribute(:status=>true)
 		if @friendship.save
-			flash[:notice] = "Frienship Accepted."
+			flash[:notice] = "Friendship Accepted."
 			redirect_to current_user
 		else
 			flash[:error] = "Unable to add friend."
@@ -31,6 +32,5 @@ class FriendshipsController < ApplicationController
 	  	flash[:notice] = "Removed friendship."
 	  	redirect_to current_user
 	end
-
 	
 end

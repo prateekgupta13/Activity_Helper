@@ -5,14 +5,16 @@ class User < ActiveRecord::Base
   scope :without_user, lambda{|user| user ? {:conditions => ["id != ?", user.id]} : {} }
   has_many :activities, dependent: :destroy
   has_many :comments, dependent: :destroy, :through=> :activities
-  has_many :friendships
+  has_many :friendships, dependent: :destroy
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
+  
 
-  attr_accessible :name,:email, :password, :password_confirmation, :username
+  attr_accessible :name,:email, :password, :password_confirmation, :username, uniqueness:true
+  before_save { |user| user.email = email.downcase }
   validates :name,length: {maximum: 15}
-  validates :username, presence: true, length: {maximum: 20}
+  validates :username, presence: true, length: {maximum: 20}, uniqueness: true
   devise :database_authenticatable, :registerable,:confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 

@@ -1,4 +1,6 @@
+
 <% if signed_in?%>
+<%provide(:title, current_user.username)%>
   <div class="row">
     <aside class="span12">
       <section>

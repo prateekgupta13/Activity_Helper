@@ -27,12 +27,14 @@
           </span>
         </div>
       </section>
-      <div>
-        <span>
-          <%=link_to "Comment?", "#", remote:true,class:"click-link"%>&nbsp;
-          <%=link_to "Like",'#', remote:true%>
-        </span>
-      </div>
+      <% if signed_in?%>
+        <div>
+          <span>
+            <%=link_to "Comment?", "#", remote:true,class:"click-link"%>&nbsp;
+            <%=link_to "Like",'#', remote:true%>
+          </span>
+        </div>
+      <%end%>
       <div class="whole-comment">
         <div class="row">
           <div class="abc">
@@ -45,6 +47,6 @@
           </span>
         </div>
       </div><hr>
-    </div>
+   </div>
   <%end%>
-</div>
+</div>    

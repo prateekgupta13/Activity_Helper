@@ -1,6 +1,6 @@
 class ActivitiesController < ApplicationController
  respond_to :html,:xml,:json
- before_filter :signed_in_user, only: [:create, :destroy]
+ before_filter :signed_in_user, only: [:create, :destroy, :index]
  # before_filter :correct_user,   only: [:new,:create, :destroy]	
 
   def new
@@ -35,19 +35,4 @@ class ActivitiesController < ApplicationController
 
   def index
   end
-
-
-  private
-
-  def signed_in_user
-       unless signed_in?
-        # store_location
-        redirect_to new_user_session_path, notice: "Please sign in."
-      end
-  end  
-
-  def correct_user
-      @activity = current_user.activities.find_by_id(params[:id])
-      redirect_to root_path if @activity.nil?
-  end   
 end

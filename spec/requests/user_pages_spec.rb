@@ -1,8 +1,9 @@
 require 'spec_helper'
 
-describe "User pages" do
+describe "User pages", :js=>true do
   subject { page }
-  describe "signup" do
+  
+  describe "signup page" do
 
     before { visit new_user_registration_path }
 
@@ -13,6 +14,12 @@ describe "User pages" do
       describe "with invalid information" do
         it "should not create a user" do
         expect { click_button submit }.not_to change(User, :count)
+        end
+
+        describe "after submission" do
+          before { click_button submit }
+          it { should have_title('Sign up') }
+          it { should have_content('error') }
         end
       end
 
@@ -28,18 +35,33 @@ describe "User pages" do
         it "should create a user" do
           expect { click_button submit }.to change(User, :count).by(1)
         end
+
+        describe "after saving the user" do
+          before { click_button submit }
+          let(:user) { User.find_by(email: 'user@example.com') }
+          it { should have_title(user.username) }
+          it { should have_link("view my profile") }
+          it { should have_content(user.activities.count) }
+          it { should have_content('Welcome') }
+        end
       end
   end 
   
-  let(:user) { FactoryGirl.create(:user) }   
+  
   describe "Profile page" do
+
+    let(:user) { FactoryGirl.create(:user) }   
     let!(:a1) { FactoryGirl.create(:activity, user: user)}
     let!(:a2) { FactoryGirl.create(:activity, user: user)}
 
-    before { visit user_path(user) }
-
+    before do
+     sign_in user
+     visit user_path(user) 
+   end
     it { should have_selector('h1',    text: user.username) }
     it { should have_title(user.username) }
+    it { should have_content(user.activities.count) }
+    it { should have_link("See Messages") }
 
     describe "activities" do
       it { should have_content(a1.category) }

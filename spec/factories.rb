@@ -20,5 +20,14 @@ FactoryGirl.define do
     activity
   end
 
+  factory :friendship do
+    status  default: false
+    user
+    friend_id 2
+  end
 
+  factory :message do
+    message "Hello"
+    friendship
+  end
 end

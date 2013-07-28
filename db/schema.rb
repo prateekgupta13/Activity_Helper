@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130723053853) do
+ActiveRecord::Schema.define(version: 20130724070055) do
 
   create_table "activities", force: true do |t|
     t.string   "category"
     t.string   "name"
     t.string   "description"
-    t.string   "user_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -26,18 +26,25 @@ ActiveRecord::Schema.define(version: 20130723053853) do
 
   create_table "comments", force: true do |t|
     t.string   "content"
-    t.string   "activity_id"
-    t.string   "user_id"
+    t.integer  "activity_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "friendships", force: true do |t|
-    t.string   "user_id"
-    t.string   "friend_id"
+    t.integer  "user_id"
+    t.integer  "friend_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "status",     default: false
+  end
+
+  create_table "messages", force: true do |t|
+    t.integer  "friendship_id"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

@@ -1,37 +1,10 @@
-<% provide(:title, @user.username) %>
+<% provide(:title, @user.username) %> 
 <div class="row">
   <aside>
     <section>
         <a href="<%= user_path(@user) %>">
           <%= gravatar_for @user %>
         </a>
-        <% if @user!=current_user%>
-          <% if current_user.friendships.find_by_friend_id(@user.id) %>
-            <% if current_user.friendships.find_by_friend_id(@user.id).status==false%> 
-              <span class="addfriend">
-              <%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
-              </span>
-            <%else%>
-              <span class="addfriend">
-                <%=link_to "Friend",'#', class:"btn btn-primary"%>
-              </span>
-            <%end%>
-          <%elsif current_user.inverse_friendships.find_by_user_id(@user.id)%>
-            <% if current_user.inverse_friendships.find_by_user_id(@user.id).status==false%> 
-              <span class="addfriend">
-              <%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
-              </span>
-            <%else%>
-              <span class="addfriend">
-                <%=link_to "Friend",'#', class:"btn btn-primary add"%>
-              </span>
-            <%end%>
-          <%else%>
-            <span class="addfriend">
-              <%=link_to "Add Friend",friendships_path(:friend_id => @user.id), :method => :post,  class:"btn btn-primary"%>
-            </span>
-          <%end%>
-        <%end%>
 
         <h1>
           <%= @user.username %>
@@ -39,16 +12,101 @@
         <span>
           <%= pluralize(@user.activities.count, "activity") %>
         </span>        
-    </section><hr>
+        <span>
+          <%=link_to "See Messages",'#',id:"seemsg" if @user==current_user%> 
+        </span>
+        <%if signed_in? %>
+          <% if @user!=current_user%>
+            <% if current_user.friendships.find_by_friend_id(@user.id) %>
+              <% if current_user.friendships.find_by_friend_id(@user.id).status==false%> 
+                <span class="addfriend">
+                <%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
+                </span>
+              <%else%>
+                <span class="addfriend">
+                  <%=link_to "Friend",'#', class:"btn btn-primary"%>
+                </span><br>
+                <span>
+                  <%=render partial:"messages/new"%>
+                </span>
+              <%end%>
+            <%elsif current_user.inverse_friendships.find_by_user_id(@user.id)%>
+              <% if current_user.inverse_friendships.find_by_user_id(@user.id).status==false%> 
+                <span class="addfriend">
+                <%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
+                </span>
+              <%else%>
+                <span class="addfriend">
+                  <%=link_to "Friend",'#', class:"btn btn-primary"%>
+                </span><br>
+                <span class="addfriend">
+                  <%=render partial:"messages/new"%>
+                </span>
+              <%end%>
+            <%else%>
+              <span class="addfriend">
+                <%=link_to "Add Friend",friendships_path(:friend_id => @user.id), :method => :post,  class:"btn btn-primary"%>
+              </span>
+            <%end%>
+          <%end%>
+        <%end%>
+
+        
+    </section>
+  </aside>
+  <aside>
+    <%if signed_in? %>
+      <section>
+        <div class="messages-partial">
+          <h2>Messages</h2>
+          <span>
+            <% @user.friendships.each do|friendship| %>
+              <% if friendship.messages.any? %>
+                <%friendship.messages.each do|msg|%>
+                  <div class="messages">
+                    <span>
+                      <%=msg.message%> sent to <%=friendship.friend.username%>
+                    </span>
+                    <span class="timestamp">
+                      Posted <%= time_ago_in_words(msg.created_at) %> ago.
+                    </span>
+                  </div>
+                <%end%>
+              <%end%>
+            <%end%>
+          </span>
+          <span>
+            <% @user.inverse_friendships.each do|inverse_friendship| %>
+              <% if inverse_friendship.messages.any? %>
+                <%inverse_friendship.messages.each do|msg|%>
+                  <div class="messages">
+                    <span>
+                      <%=msg.message%> sent to <%=inverse_friendship.user.username%>
+                    </span>
+                    <span class="timestamp">
+                      Posted <%= time_ago_in_words(msg.created_at) %> ago.
+                    </span>
+                  </div>
+                <%end%>
+              <%end%>
+            <%end%>
+          </span>
+        </div>
+      </section>
+     <%end%><hr>
   </aside>
   <aside>
     <div>
       <% if @user.activities.any? %>
         <h3>Activities (<%= @user.activities.count %>)</h3><hr>
-          <%= render partial:'activities/activity', locals:{nures:@activities} %>
+        <div class="activities">
+          <%= render partial:'activities/activity', locals: { nures: @activities } %>
+        </div>         
         <%= will_paginate @activities %>
       <% end %>
     </div>
+  </aside>
+  <aside>
     <section>
       <div class="friends-section">
         <h2>Friends</h2>
@@ -116,7 +174,7 @@
           <%end%>
         </span><hr>
       </div>
-    </section>
+    </section>    
   </aside>
 </div>
 

@@ -26,6 +26,7 @@ aside {
   }
 }
 .addfriend{
+  margin-top: -3%;
   float: right;
   font-weight: bold;
   .friend-link{
@@ -72,4 +73,45 @@ aside {
       padding:5px;
     }
   }
+}
+
+.msg-form{
+padding-top:10px;
+float:relative;
+
+   textarea{
+    rows:10;
+    cols:10;
+      
+  }
+    
+}
+
+.messages-partial{
+display:none;
+  border-color: #2E2EFE;
+    border-style: solid;
+    border-width:1px;
+  background-color: #E6E6E6;
+  padding:10px;
+  padding-bottom: 0px;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  .timestamp{
+      color: #999;
+  }
+}
+
+.messages{
+  background-color: #F5A9E1;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  padding:5px;
+  .timestamp{
+  
+  }
+}
+
+.msg{
+  margin-left: 40px;
 }

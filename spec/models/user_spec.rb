@@ -15,8 +15,12 @@ describe User do
 	it { should respond_to(:password)}
 	it { should respond_to(:password_confirmation)}
 	it { should respond_to(:activities) }
-	
-	
+	it { should respond_to(:comments) }
+	it { should respond_to(:friendships) }
+	it { should respond_to(:inverse_friendships) }
+	it { should respond_to(:friends) }
+	it { should respond_to(:inverse_friends) }
+		
 	it { should be_valid }
 
 	 describe "when username is not present" do
@@ -27,6 +31,14 @@ describe User do
     describe "when username is too long" do
   		before {@user.username="a"*50}
   		it {should_not be_valid}
+	end
+
+	describe "when username is already taken" do
+		before do
+			user_with_same_username=@user.dup
+			user_with_same_username.save
+		end
+		it{should_not be_valid}
 	end
 
 
@@ -99,8 +111,7 @@ describe User do
 
 	    it "should destroy associated activities" do
 	      activities = @user.activities.dup
-	      @user.destroy
-	      
+	      @user.destroy	      
 	      activities.each do |activity|
 	        Activity.find_by_id(activity.id).should be_nil
 	      end

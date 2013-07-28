@@ -2,10 +2,10 @@
 	<% activity.comments.each do|comment|%>
 		<div class="comments-partial">
 			<span>
-				<%=link_to (gravatar_for activity.user, {size: 35}), activity.user %>
+				<%=link_to (gravatar_for comment.user, {size: 35}), comment.user %>
 			</span>
 			<span class="content">
-				<b><%=comment.user_id%></b>&nbsp;<%=comment.content%>
+				<b><%=comment.user.username%></b>&nbsp;<%=comment.content%>
 			</span>
 			<span class="timestamp">
 				Posted <%= time_ago_in_words(comment.created_at) %> ago.
