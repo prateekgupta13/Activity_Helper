@@ -1,0 +1,86 @@
+<span class="span4 friends-sec">
+	<h3>Friends</h3><hr>
+	<%current_user.friends.each do|friend|%>
+		<% if current_user.friendships.find_by_friend_id(friend.id).status==true%>
+			<div class="friends">
+				<%=link_to (gravatar_for friend ,{size:35}), "/messages/conversation?param1=#{friend.id}", class: "see-conversation", remote:true%>
+				<b><%=friend.username%></b>
+				<span class="badge badge-success total">
+					T<%=current_user.inverse_messages.where(user_id: friend.id).count+current_user.messages.where(recipient_id: friend.id).count%>
+				</span>
+				<span class="badge badge-important unread">
+					U<%=current_user.inverse_messages.where(user_id: friend.id, status: false).count%>
+				</span>
+			</div>
+		<%end%>
+	<%end%>
+	<%current_user.inverse_friends.each do|inverse_friend|%>
+		<% if current_user.inverse_friendships.find_by_user_id(inverse_friend.id).status==true%>
+			<div class="friends">
+				<%=link_to (gravatar_for inverse_friend ,{size:35}), "/messages/conversation?param1=#{inverse_friend.id}", class: "see-conversation", remote:true%>
+				<b><%=inverse_friend.username%></b>
+				<span class="badge badge-success total">
+					T<%=current_user.inverse_messages.where(user_id: inverse_friend.id).count+current_user.messages.where(recipient_id: inverse_friend.id).count%>
+				</span>
+				<span class="badge badge-important unread">
+					U<%=current_user.inverse_messages.where(user_id: inverse_friend.id ,status: false).count%>
+				</span>
+			</div>
+		<%end%>
+	<%end%>
+</span>
+
+<span class="span7 friends-sec">
+	
+	<h3>Messages</h3><hr>
+	<div class="mutual-msg">
+
+		<%current_user.friends.each do|friend|%>
+			<%inverse_messages=current_user.inverse_messages.where(user_id:friend.id, status:false).limit 2%>
+			<% if inverse_messages.any?%>
+				<h4><%=friend.username%></h4>
+				<div>
+					<%inverse_messages.each do|inverse_message|%>
+						<div class="friends">
+							<%=link_to (gravatar_for User.find(inverse_message.user_id), {size:35}), User.find(inverse_message.user_id).username%>
+							<b><%=friend.username%></b>
+							<%=inverse_message.message%><br>
+							<span class="right-img">
+								
+							</span>
+							<span class="timestamp">
+		               			 Posted <%= time_ago_in_words(inverse_message.created_at) %> ago.
+		            		</span>
+						</div>	
+					<%end%>
+				</div>
+			<%end%>
+		<%end%>
+
+		<%current_user.inverse_friends.each do|inverse_friend|%>
+			<%inverse_messages=current_user.inverse_messages.where(user_id:inverse_friend.id, status:false).limit 2%>
+			<% if inverse_messages.any?%>
+			<h4><%=inverse_friend.username%></h4>
+				<%inverse_messages.each do|inverse_message|%>
+					<div class="friends">
+						<%=link_to (gravatar_for User.find(inverse_message.user_id), {size:35}), User.find(inverse_message.user_id).username%>
+						<b><%=inverse_friend.username%></b>
+						<%=inverse_message.message%><br>
+						<span class="timestamp">
+	               			 Posted <%= time_ago_in_words(inverse_message.created_at) %> ago.
+	            		</span>
+					</div>	
+				<%end%>
+			<%end%>
+		<%end%>
+
+		<%= form_for :message, remote:true, html:{id:'index-msgform'} do |f| %><hr>
+	  		<span class="indexmsg">
+	  			<%= f.text_field :message, class: "ad", placeholder: "Username with message" %>
+			</span>
+	  		<span class="indexmsg send">
+	  			<%=f.submit "Message", class:"btn btn-success"%>
+			</span>
+		<% end %>
+	</div>	
+</span>

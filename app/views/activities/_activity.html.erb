@@ -30,8 +30,8 @@
       <% if signed_in?%>
         <div>
           <span>
-            <%=link_to "Comment?", "#", remote:true,class:"click-link"%>&nbsp;
-            <%=link_to "Like",'#', remote:true%>
+            <%=link_to '<i class="icon-comment"></i> Comment?'.html_safe, "#", remote:true,class:"click-link"%>&nbsp;
+            <%=link_to '<i class="icon-thumbs-up"></i>Like'.html_safe,'#', remote:true%>
           </span>
         </div>
       <%end%>

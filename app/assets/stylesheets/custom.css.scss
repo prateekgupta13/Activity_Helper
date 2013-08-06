@@ -24,7 +24,7 @@ section {
 }
 
 textarea {
-width:80%;
+
   resize: vertical;
 }
 
@@ -88,7 +88,7 @@ form.form-search{
 aside {
   section {
     padding: 10px 0;
-    border-top: 1px solid $grayLighter;
+    border-top: 1px solid $grayLight;
     &:first-child {
       border: 0;
       padding-top: 0;
@@ -137,6 +137,7 @@ aside {
 }
 aside {
   textarea {
+    width:80%;
     height: 100px;
     margin-bottom: 5px;
   }

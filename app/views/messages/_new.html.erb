@@ -1,0 +1,11 @@
+<%provide(:title, "Chat")%>
+<div class="msg-form">
+	<%= form_for :message, url: messages_path(recipient_id: @user.id) do |f| %>
+	  <span>
+	  <%= f.text_area :message, placeholder: "Write Something For Me" %>
+	</span>
+	  <span class="btn btn-primary ">
+	  <%=f.submit "send"%>
+	</span>
+	<% end %>
+</div>

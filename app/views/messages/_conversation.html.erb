@@ -1,0 +1,24 @@
+<div class="mutual-msg">
+	<h4><%=User.find(friend_id).username%></h4>
+	<%messages_all.sort_by { |obj| obj.created_at }.each do|message|%>
+		<div class="friends">
+			<%=link_to (gravatar_for User.find(message.user_id), {size:35}), User.find(message.user_id).username%>
+			<b><%=message.user.username%></b>
+			<%=message.message%>    <%=link_to '<i class="icon-trash"></i>Delete'.html_safe, message_path(message.id, friend_id:friend_id), :confirm => "Are you sure you want to delete?", remote:true, method: :Delete, class: 'delete-msg'%><br>
+			<span class="right-img">
+			<%=link_to (gravatar_for User.find(message.recipient_id), {size:35}), User.find(message.recipient_id).username%>
+			</span>
+			<span class="timestamp">
+	            Posted <%= time_ago_in_words(message.created_at) %> ago.
+	        </span>
+		</div>
+	<%end%><hr>
+	<%= form_for :message, url: messages_path(recipient_id:friend_id), method: :post, html:{id:'msg-create'},remote:true do |f| %>
+		<span class="indexmsg">
+			<%= f.text_field :message, placeholder: "Write Something for me" %>
+		</span>
+		<span class="indexmsg">
+			<%=f.submit "Message", class:"btn btn-success send"%>
+		</span>
+	<% end %>
+</div>

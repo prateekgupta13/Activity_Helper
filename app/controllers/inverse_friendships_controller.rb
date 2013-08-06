@@ -3,8 +3,11 @@ class InverseFriendshipsController < ApplicationController
 
 	def destroy
 		@friendship = current_user.inverse_friendships.find(params[:id])
-	  	@friendship.destroy
+	  	if @friendship.destroy
 	  	flash[:notice] = "Removed friendship."
+	  else
+	  	flash[:notice]="Unsuccessful in removing friendship"
+	  end
 	  	redirect_to current_user
 	end
 end

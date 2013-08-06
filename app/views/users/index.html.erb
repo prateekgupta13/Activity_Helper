@@ -1,39 +1,49 @@
 <% provide(:title, 'All users') %>
-<h1>All users</h1>
+<aside>
+    <section>
+        <a href="<%= user_path(@user) %>">
+          <%= gravatar_for @user %>
+        </a>
+        <h1>
+          <%= @user.username %>
+        </h1>
+    </section>
+</aside><hr>
 <%= will_paginate %>
 <span>
 	<div class="users">
+		<h3>All users</h3><br>
 		<%@users.each do|user|%>
 			<div class="list-users">
 				<span>
 					<%=user.username%>
 				</span>
 				<span>
-					<%=link_to (gravatar_for user), user_path(user)%>
+					<%=link_to (gravatar_for user, {size:30}), user_path(user)%>
 				</span>
 				<% if current_user.friendships.find_by_friend_id(user) %>
 					<% if current_user.friendships.find_by_friend_id(user).status==false%> 
 						<span class="status">
-						<%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
+						<%=link_to "Friend Request Pending",'#', class:"btn btn-info"%>
 						</span>
 					<%else%>
 						<span class="status">
-							<%=link_to "Friend",'#', class:"btn btn-primary"%>
+							<%=link_to "Friend",'#', class:"btn btn-success"%>
 						</span>
 					<%end%>
 				<%elsif current_user.inverse_friendships.find_by_user_id(user)%>
 					<% if current_user.inverse_friendships.find_by_user_id(user).status==false%> 
 						<span class="status">
-						<%=link_to "Friend Request Pending",'#', class:"btn btn-primary"%>
+						<%=link_to "Friend Request Pending",'#', class:"btn btn-info"%>
 						</span>
 					<%else%>
 						<span class="status">
-							<%=link_to "Friend",'#', class:"btn btn-primary"%>
+							<%=link_to "Friend",'#', class:"btn btn-success"%>
 						</span>
 					<%end%>
 				<%else%>
 					<span class="status">
-						<%=link_to "Add Friend",friendships_path(:friend_id => user.id), :method => :post,  class:"btn btn-primary"%>
+						<%=link_to "Add Friend",friendships_path(:friend_id => user.id), :method => :post,  class:"btn btn-warning"%>
 					</span>
 				<%end%>
 			</div>

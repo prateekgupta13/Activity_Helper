@@ -1,0 +1,60 @@
+.msg-panel{
+	float: left;
+
+}
+.friends-sec
+{
+	margin-left: 0px;
+	margin-right: 10px;
+	border:solid;
+	border-width: 1px;
+	border-radius: 6px;
+	border-color: #2E2EFE;
+	background-color: #E6E6E6;
+	text-align: center;
+.friends{
+	background-color: #F5A9E1;
+	border:solid;
+	border-width: 1px;
+	border-radius: 4px;
+	border-color: #2E2EFE;
+	text-align: left;
+	padding:5px;
+	height: 40px;
+	margin:5px;
+	/*margin-left: 2px;
+	margin-right: 2px;*/
+
+	}
+}
+
+.right-img{
+	float:right;
+	margin-top:-20px;
+}
+
+textarea{
+	width: 80%;
+}
+
+.indexmsg{
+
+	input[type="text"]{
+    width:400px;
+    margin-top:-4px;
+    }
+}
+
+.ad{
+
+	text-align: left;
+}
+
+.img-typeahead{
+	height: 35px;
+	margin-right: 5px;
+}
+
+.send{
+	margin-top:-12px;
+}

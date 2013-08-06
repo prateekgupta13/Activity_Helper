@@ -9,7 +9,7 @@
 			</span>
 			<span class="timestamp">
 				Posted <%= time_ago_in_words(comment.created_at) %> ago.
-				&nbsp;<%=link_to "Like",'#', remote:true%>
+				&nbsp;<%=link_to '<i class="icon-thumbs-up"></i>Like'.html_safe,'#', remote:true%>
 			</span>
 		</div>
 	<%end%>

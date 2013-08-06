@@ -20,6 +20,10 @@ describe User do
 	it { should respond_to(:inverse_friendships) }
 	it { should respond_to(:friends) }
 	it { should respond_to(:inverse_friends) }
+	it { should respond_to(:messages) }
+	it { should respond_to(:inverse_messages) }
+	it { should respond_to(:senders) }
+	
 		
 	it { should be_valid }
 

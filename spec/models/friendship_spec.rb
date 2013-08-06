@@ -32,16 +32,16 @@ describe "Friendship" do
 	    it { should_not be_valid }
 	end	
 
-	describe "messages Association" do
-		before {@friendship.save}
-		it "should destroy associated messages" do
-    	  messages = @friendship.messages.dup
-      		@friendship.destroy       
-      		messages.each do |message|
-	        	Message.find_by_id(message.id).should be_nil
-    	  	end
-    	end
-    end
+	# describe "messages Association" do
+	# 	before {@friendship.save}
+	# 	it "should destroy associated messages" do
+ #    	  messages = @friendship.messages.dup
+ #      		@friendship.destroy       
+ #      		messages.each do |message|
+	#         	Message.find_by_id(message.id).should be_nil
+ #    	  	end
+ #    	end
+ #    end
 
 	describe "either email send" do
 

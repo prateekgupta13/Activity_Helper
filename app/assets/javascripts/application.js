@@ -12,4 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require hogan.js
+//= require template.js
+//= require compiler.js
+//= require bootstrap
+
 //= require_tree .

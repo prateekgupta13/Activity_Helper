@@ -1,7 +1,9 @@
 ActivityHelper::Application.routes.draw do
 
    
-  devise_for :users, controllers: {registrations: "users/registrations"}
+  devise_for :users, controllers: {registrations: "users/registrations"} do
+  get "/users/sign_out"=>"devise/sessions#destroy"
+  end
   
   resources :users do
     resources :activities do
@@ -10,7 +12,12 @@ ActivityHelper::Application.routes.draw do
   end
   resources :friendships
   resources :inverse_friendships
-  resources :messages, only: [:new, :create, :destroy]
+  match '/messages/conversation', to: 'messages#conversation', via: [:get]
+  resources :messages, only: [:new, :create, :destroy, :index]
+  get '/messages/get_friends'
+
+  
+
   # resources :sessions
   # match '/sign_up',  to: 'regsitration#new',     via: 'get'
   # match '/sign_in',  to: 'sessions#new',         via: 'get'

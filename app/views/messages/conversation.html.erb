@@ -1,0 +1,23 @@
+<span class="span4 friends-sec">
+	<h3>Current Friend</h3><hr>
+		<div class="friends">
+			<%=link_to (gravatar_for @friend ,{size:35}), @friend.username%>
+			<%=@friend.username%>
+		</div>
+</span>
+
+<span class="span7 friends-sec">
+	<h3>Messages</h3><hr>
+	<%@messages_all.each do|message|%>
+		<div class="friends">
+			<%=link_to (gravatar_for User.find(message.user_id), {size:35}), User.find(message.user_id)%>
+			<%=message.message%>     <%=link_to "Delete", '#'%><br>
+			<span class="right-img">
+			<%=link_to (gravatar_for User.find(message.recipient_id), {size:35}), User.find(message.recipient_id)%>
+			</span>
+			<span class="timestamp">
+                Posted <%= time_ago_in_words(message.created_at) %> ago.
+            </span>
+		</div>
+	<%end%>
+</span>

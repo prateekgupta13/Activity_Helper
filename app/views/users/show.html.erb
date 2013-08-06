@@ -50,7 +50,6 @@
             <%end%>
           <%end%>
         <%end%>
-
         
     </section>
   </aside>
@@ -59,35 +58,33 @@
       <section>
         <div class="messages-partial">
           <h2>Messages</h2>
-          <span>
-            <% @user.friendships.each do|friendship| %>
-              <% if friendship.messages.any? %>
-                <%friendship.messages.each do|msg|%>
-                  <div class="messages">
-                    <span>
-                      <%=msg.message%> sent to <%=friendship.friend.username%>
-                    </span>
-                    <span class="timestamp">
-                      Posted <%= time_ago_in_words(msg.created_at) %> ago.
-                    </span>
-                  </div>
-                <%end%>
+           <span>
+            <%if current_user.messages.any?%>
+              <% current_user.messages.each do|msg| %>
+                <div class="messages">
+                  <span>
+                    <%=link_to (gravatar_for User.find(msg.user_id), {size:35}),User.find(msg.user_id).username %>
+                    <%=msg.message%> sent to <%=User.find(msg.recipient_id).username%>
+                  </span>
+                  <span class="timestamp">
+                    Posted <%= time_ago_in_words(msg.created_at) %> ago.
+                  </span>
+                </div>
               <%end%>
             <%end%>
           </span>
           <span>
-            <% @user.inverse_friendships.each do|inverse_friendship| %>
-              <% if inverse_friendship.messages.any? %>
-                <%inverse_friendship.messages.each do|msg|%>
-                  <div class="messages">
-                    <span>
-                      <%=msg.message%> sent to <%=inverse_friendship.user.username%>
-                    </span>
-                    <span class="timestamp">
-                      Posted <%= time_ago_in_words(msg.created_at) %> ago.
-                    </span>
-                  </div>
-                <%end%>
+            <%if current_user.inverse_messages.any?%>
+              <% current_user.inverse_messages.each do|inverse_msg| %>
+                <div class="messages">
+                  <span>
+                     <%=link_to (gravatar_for User.find_by_id(inverse_msg.user_id), {size:35}), User.find_by_id(inverse_msg.user_id).username %>
+                    <%=inverse_msg.message%> sent from <%=User.find(inverse_msg.user_id).username%>
+                  </span>
+                  <span class="timestamp">
+                    Posted <%= time_ago_in_words(inverse_msg.created_at) %> ago.
+                  </span>
+                </div>
               <%end%>
             <%end%>
           </span>
@@ -122,16 +119,12 @@
                 </span>
                 <span>
                   <%if current_user==@user%>
-                    (<%= link_to "remove", friendship_path(friendship), :method => :delete %>)
+                    (<%= link_to '<i class="icon-trash"></i>'.html_safe, friendship_path(friendship), :method => :delete %>)
                   <%end%>
                 </span>
               </div>
             <%end%>
           <%end%>
-        </span>
-
-
-        <span>
           <% @user.inverse_friendships.each do|inverse_friendship| %>
             <% if inverse_friendship.status==true %>
               <div class="friends">
@@ -143,15 +136,15 @@
                 </span>
                 <span>
                   <%if current_user==@user%>
-                    (<%= link_to "remove", inverse_friendship_path(inverse_friendship), :method => :delete %>)
+                    (<%= link_to '<i class="icon-trash"></i>'.html_safe, inverse_friendship_path(inverse_friendship), :method => :delete %>)
                   <%end%>
                 </span>
               </div>
             <%end%>
           <%end%>
-        </span><hr>
-
-
+        </span>
+      </div>
+      <div class="friends-section">
         <h2>Friend Requests for you</h2>
         <span>
           <%@user.inverse_friendships.each do|inverse_friendship| %>
@@ -172,7 +165,7 @@
               <%end%>
             </span>
           <%end%>
-        </span><hr>
+        </span>
       </div>
     </section>    
   </aside>

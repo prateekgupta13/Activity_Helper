@@ -1,0 +1,9 @@
+$('.mutual-msg').replaceWith("<%=escape_javascript( render partial: "messages/conversation", locals: {messages_all: @messages_all, friend_id: @friend_id})%>");
+
+// $(document).ready(function(){
+
+// 	$(document).on("click",".delete-msg",function() {
+// 		    $(document).closest('.friends').find('.total').html("U0");
+// 		});
+// });
+

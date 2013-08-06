@@ -9,11 +9,15 @@ class User < ActiveRecord::Base
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
-  
+  has_many :messages
+  has_many :recipients, through: :messages
+  has_many :inverse_messages, class_name: 'Message', :foreign_key => "recipient_id"
+  has_many :senders, through: :inverse_messages, :source => :user
+    
 
   attr_accessible :name,:email, :password, :password_confirmation, :username, uniqueness:true
   before_save { |user| user.email = email.downcase }
-  validates :name,length: {maximum: 15}
+  validates :name,length: {maximum: 25}
   validates :username, presence: true, length: {maximum: 20}, uniqueness: true
   devise :database_authenticatable, :registerable,:confirmable,
          :recoverable, :rememberable, :trackable, :validatable

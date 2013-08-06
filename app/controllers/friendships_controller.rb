@@ -15,7 +15,7 @@ class FriendshipsController < ApplicationController
 
 	def update
 		@friendship=Friendship.find(params[:id])
-		@friendship.update_attribute(:status=>true)
+		@friendship.update_attributes(status: true)
 		if @friendship.save
 			flash[:notice] = "Friendship Accepted."
 			redirect_to current_user

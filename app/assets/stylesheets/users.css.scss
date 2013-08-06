@@ -36,7 +36,7 @@ aside {
 }
 
 .friends-section{
-
+  min-height:200px;
   border-color: #2E2EFE;
   border-style: solid;
   border-width:1px;
@@ -46,12 +46,17 @@ aside {
   border-radius: 6px;
   margin-bottom: 5px;
  .friends{
+  text-align:center;
+ border:1px solid;
+  border-color: #2E2EFE;
+  float:left;
   background-color: #F5A9E1;
   border-radius: 4px;
-  margin-bottom: 2px;
-  padding:15px;
+  /*margin-bottom: 2px;*/
+  padding:5px;
+  margin-right: 10px;
   min-height: 60px;
-  width: 60px;
+  min-width: 60px;
  } 
 }
 .users{
@@ -64,7 +69,9 @@ aside {
   padding-bottom: 0px;
   .list-users{
     background-color: #F5A9E1;
-    height: 70px;
+    border:1px solid;
+  border-color: #2E2EFE;
+    min-height: 35px;
     padding: 5px;
     margin:5px;
     border-radius: 6px;
@@ -114,4 +121,8 @@ display:none;
 
 .msg{
   margin-left: 40px;
+}
+
+h3{
+  text-align: center;
 }

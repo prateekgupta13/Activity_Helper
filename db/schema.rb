@@ -41,8 +41,10 @@ ActiveRecord::Schema.define(version: 20130724070055) do
   end
 
   create_table "messages", force: true do |t|
-    t.integer  "friendship_id"
     t.text     "message"
+    t.integer  "user_id"
+    t.integer  "recipient_id"
+    t.boolean  "status",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
