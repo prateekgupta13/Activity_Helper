@@ -33,7 +33,11 @@ class MessagesController < ApplicationController
 	end
 		
 	def index
-		
+		@friend_id=params[:recipient_id]
+		@messages = current_user.messages.where("recipient_id = ? and created_at > ?", params[:recipient_id], Time.zone.at(params[:after].to_i+1))		
+		@inverse_messages = current_user.inverse_messages.where("user_id = ? and created_at > ?", params[:recipient_id], Time.at(params[:after].to_i+1))		
+		@messages_all=@messages+@inverse_messages
+
 
 
 		# current_user.messages.each do|message|

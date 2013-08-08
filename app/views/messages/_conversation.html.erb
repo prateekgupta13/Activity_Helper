@@ -1,7 +1,7 @@
-<div class="mutual-msg">
+<div class="mutual-msg" data-id="<%=friend_id%>">
 	<h4><%=User.find(friend_id).username%></h4>
 	<%messages_all.sort_by { |obj| obj.created_at }.each do|message|%>
-		<div class="friends">
+		<div class="friends" data-time="<%= message.created_at.to_i %>">
 			<%=link_to (gravatar_for User.find(message.user_id), {size:35}), User.find(message.user_id).username%>
 			<b><%=message.user.username%></b>
 			<%=message.message%>    <%=link_to '<i class="icon-trash"></i>Delete'.html_safe, message_path(message.id, friend_id:friend_id), :confirm => "Are you sure you want to delete?", remote:true, method: :Delete, class: 'delete-msg'%><br>
